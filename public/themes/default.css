@@ -1,0 +1,40 @@
+
+  :root {
+    /* Màu nền và chữ cơ bản */
+    --color-background: #ffffff;
+    --color-background-2: #942222;
+    --color-surface: #f8f9fa;
+    --color-text: #212529;
+    --color-muted: #6c757d;
+
+    /* Màu chính (thường dùng cho các nút, liên kết chính) */
+    --color-primary: #0d6efd;
+    --color-primary-hover: #0b5ed7;
+    --color-primary-foreground: #ffffff;
+
+    /* Màu phụ (thường dùng để bổ trợ màu chính) */
+    --color-secondary: #6c757d;
+    --color-secondary-hover: #5c636a;
+    --color-secondary-foreground: #ffffff;
+
+    /* Màu cảnh báo */
+    --color-warning: #ffc107;
+    --color-warning-foreground: #212529;
+
+    /* Màu thành công */
+    --color-success: #198754;
+    --color-success-foreground: #ffffff;
+
+    /* Màu thông báo lỗi */
+    --color-error: #dc3545;
+    --color-error-hover: #bb2d3b;
+    --color-error-foreground: #ffffff;
+
+    /* Màu thông tin */
+    --color-info: #0dcaf0;
+    --color-info-foreground: #212529;
+
+    /* Border và outline */
+    --color-border: #dee2e6;
+    --color-focus: #66afe9;
+}
