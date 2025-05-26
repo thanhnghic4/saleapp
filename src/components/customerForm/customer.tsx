@@ -1,17 +1,18 @@
 import { useState } from "react";
 import type { ICustomer } from "../../services/interface";
 import "./customer.css";
+import { Api } from "../../services";
 
 const CustomerForm: React.FC = () => {
   const [customer, setCustomer] = useState<ICustomer>({
     timestamp: Date.now(),
-    Year: new Date().getFullYear(),
-    Month: new Date().getMonth() + 1,
-    Day: new Date().getDate(),
-    Name: "",
-    Phone: 0,
-    Address: "",
-    Description: "",
+    year: new Date().getFullYear(),
+    month: new Date().getMonth() + 1,
+    day: new Date().getDate(),
+    name: "",
+    phone: 0,
+    address: "",
+    description: "",
   });
 
   const handleChange = (
@@ -24,54 +25,52 @@ const CustomerForm: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Customer created:", customer);
     // Add logic to save customer
+    const result = await Api.createCustomer(customer);
+    console.log(result);
   };
 
   return (
     <form onSubmit={handleSubmit} className="customer-form">
       <h2>Create Customer</h2>
-
       <label>
         Name:
         <input
           type="text"
-          name="Name"
-          value={customer.Name}
+          name="name"
+          value={customer.name}
           onChange={handleChange}
           required
         />
       </label>
-
       <label>
         Phone:
         <input
           type="number"
-          name="Phone"
-          value={customer.Phone}
+          name="phone"
+          value={customer.phone}
           onChange={handleChange}
           required
         />
       </label>
-
       <label>
         Address:
         <input
           type="text"
-          name="Address"
-          value={customer.Address}
+          name="address"
+          value={customer.address}
           onChange={handleChange}
           required
         />
       </label>
-
       <label>
         Description:
         <textarea
-          name="Description"
-          value={customer.Description}
+          name="description"
+          value={customer.description}
           onChange={handleChange}
         />
       </label>

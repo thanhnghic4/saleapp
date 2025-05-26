@@ -6,7 +6,6 @@ import React, {
   useEffect,
 } from "react";
 import { ThemeLinkCSSMap, ThemeStyleMap, type ThemeType } from "./interface";
-import styled from "styled-components";
 
 function createIfnotExistsCssRef(id: string, path: string) {
   const linkElement = document.getElementById(id);
@@ -30,7 +29,6 @@ function loadCSS(theme: ThemeType) {
   createIfnotExistsCssRef("dynamic-css-1", ThemeStyleMap[theme]);
   createIfnotExistsCssRef("dynamic-css-2", ThemeLinkCSSMap[theme]);
 }
-const Wrapper = styled.div``;
 interface ThemeContextType {
   theme: ThemeType;
   setTheme: (newTheme: ThemeType) => void;

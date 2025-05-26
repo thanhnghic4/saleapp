@@ -18,6 +18,9 @@
     background-color: var(--color-background);
     width: 70%;
     height: 100%;
+    display: flex;
+    justify-content: center; /* canh giữa ngang */
+    align-items: center;     /* canh giữa dọc */
   }
   
   .main-page-left-menu-wrap {

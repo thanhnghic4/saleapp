@@ -1,54 +1,78 @@
 export interface ICustomer {
   timestamp: number;
-  Year: number;
-  Month: number;
-  Day: number;
-  Name: string;
-  Phone: number;
-  Address: string;
-  Description: string;
+  year: number;
+  month: number;
+  day: number;
+  name: string;
+  phone: number;
+  address: string;
+  description: string;
+}
+
+export interface ICreateCustomer {
+  name: string;
+  phone: number;
+  address: string;
+  description: string;
 }
 
 export interface IProduct {
   timestamp: number;
-  Year: number;
-  Month: number;
-  Day: number;
-  Name: string;
-  Code: string;
+  year: number;
+  month: number;
+  day: number;
+  name: string;
+  code: string;
   importPrice: number;
-  sellingPrice: number;
-  Address: string;
-  Description: string;
+  description: string;
 }
 
 export interface IOrder {
   timestamp: number;
-  Year: number;
-  Month: number;
-  Day: number;
-  CustomerName: string;
-  CustomerPhone: string;
-  Status: string;
-  Id: string;
+  year: number;
+  month: number;
+  day: number;
+  customerName: string;
+  customerPhone: string;
+  status: string;
+  id: string;
   description: string;
   detail: string;
 }
 
 export interface IOrderDetail {
   timestamp: number;
-  Year: number;
-  Month: number;
-  Day: number;
-  CustomerName: string;
-  CustomerPhone: string;
-  Status: string;
+  year: number;
+  month: number;
+  day: number;
+  customerName: string;
+  customerPhone: string;
+  status: string;
+  description: string;
   importPrice: number;
   sellingPrice: number;
   profitPrice: number;
   productName: string;
   quantity: number;
-  description: string;
   detail: string;
   orderDBId: string;
+}
+
+export interface ICreateOrder {
+  id?: string;
+  order: {
+    customerName: string;
+    customerPhone: string;
+    status?: string; // e.g., "active", "deleted"
+    description?: string;
+    detail?: string;
+  };
+  orderDetail: {
+    Description?: string;
+    ImportPrice: number;
+    SellingPrice: number;
+    ProductName: string;
+    Quantity: number;
+    Detail?: string;
+  }[];
 }
