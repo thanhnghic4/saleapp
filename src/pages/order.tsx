@@ -1,10 +1,12 @@
-import type { ICreateCustomer, ICustomer } from "../services/interface";
+import type {
+  ICreateCustomer,
+  ICreateOrder,
+  ICustomer,
+} from "../services/interface";
 import CorePage from "./core";
 import React, { useEffect, useState } from "react";
 
-// Dummy APIs (replace with actual API calls)
 async function getAllCustomer(): Promise<ICustomer[]> {
-  // Replace this with your real API call (App Script fetch)
   return [
     {
       name: "Nguyễn Văn A",
@@ -26,27 +28,38 @@ async function getDetailCustomer(phone: string): Promise<ICustomer | null> {
 
 async function createCustomerAPI(customer: ICreateCustomer): Promise<void> {
   console.log("Tạo khách hàng:", customer);
-  // Gọi API App Script ở đây
+}
+
+async function createOrderAPI(order: ICreateOrder): Promise<void> {
+  console.log("Tạo đơn hàng:", order);
 }
 
 export default function OrderPage() {
   const [allCustomers, setAllCustomers] = useState<ICustomer[]>([]);
   const [phone, setPhone] = useState("");
   const [customer, setCustomer] = useState<ICustomer | null>(null);
-  const [checking, setChecking] = useState(false);
   const [showCreateCustomer, setShowCreateCustomer] = useState(false);
   const [showOrderForm, setShowOrderForm] = useState(false);
 
-  const [createCustomerForm, setCreateCustomerForm] = useState<ICreateCustomer>(
-    {
-      name: "",
-      phone: 0,
-      address: "",
-      description: "",
-    }
+  const [newCustomer, setNewCustomer] = useState<ICreateCustomer>({
+    name: "",
+    phone: 0,
+    address: "",
+    description: "",
+  });
+
+  const [orderDescription, setOrderDescription] = useState("");
+  const [orderDetails, setOrderDetails] = useState<ICreateOrder["orderDetail"]>(
+    [
+      {
+        ProductName: "",
+        ImportPrice: 0,
+        SellingPrice: 0,
+        Quantity: 1,
+      },
+    ]
   );
 
-  // Load danh sách khách hàng khi mount
   useEffect(() => {
     async function fetchCustomers() {
       const res = await getAllCustomer();
@@ -56,22 +69,22 @@ export default function OrderPage() {
   }, []);
 
   const handleCheckCustomer = async () => {
-    setChecking(true);
     const res = await getDetailCustomer(phone);
     if (res) {
       setCustomer(res);
       setShowCreateCustomer(false);
       setShowOrderForm(true);
     } else {
+      setCustomer(null);
       setShowCreateCustomer(true);
       setShowOrderForm(false);
     }
-    setChecking(false);
   };
 
-  const handleCreateCustomer = async () => {
-    await createCustomerAPI(createCustomerForm);
-    const res = await getDetailCustomer(createCustomerForm.phone.toString());
+  const handleCreateCustomer = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await createCustomerAPI(newCustomer);
+    const res = await getDetailCustomer(newCustomer.phone.toString());
     if (res) {
       setCustomer(res);
       setShowCreateCustomer(false);
@@ -79,21 +92,60 @@ export default function OrderPage() {
     }
   };
 
+  const handleAddDetail = () => {
+    setOrderDetails((prev) => [
+      ...prev,
+      {
+        ProductName: "",
+        ImportPrice: 0,
+        SellingPrice: 0,
+        Quantity: 1,
+      },
+    ]);
+  };
+
+  const handleChangeDetail = (
+    index: number,
+    field: string,
+    value: string | number
+  ) => {
+    setOrderDetails((prev) =>
+      prev.map((item, i) => (i === index ? { ...item, [field]: value } : item))
+    );
+  };
+
+  const handleSubmitOrder = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!customer) return;
+    const order: ICreateOrder = {
+      order: {
+        customerName: customer.name,
+        customerPhone: customer.phone.toString(),
+        description: orderDescription,
+        status: "active",
+      },
+      orderDetail: orderDetails,
+    };
+    await createOrderAPI(order);
+    alert("Tạo đơn hàng thành công!");
+  };
+
   return (
     <CorePage>
-      <div style={{ maxWidth: 600, margin: "0 auto", padding: 20 }}>
+      <form className="order-check-form">
         <h2>Tạo Đơn Hàng</h2>
 
-        {/* Nhập SĐT khách hàng */}
         <label>
-          Số điện thoại khách hàng:
+          Số điện thoại:
           <input
             list="customer-suggestions"
+            type="number"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             required
           />
         </label>
+
         <datalist id="customer-suggestions">
           {allCustomers.map((cus) => (
             <option key={cus.phone} value={cus.phone}>
@@ -102,83 +154,162 @@ export default function OrderPage() {
           ))}
         </datalist>
 
-        <button type="button" onClick={handleCheckCustomer} disabled={checking}>
-          {checking ? "Đang kiểm tra..." : "Kiểm tra khách hàng"}
+        <button type="button" onClick={handleCheckCustomer}>
+          Kiểm tra khách hàng
         </button>
+      </form>
 
-        {/* Thông tin khách đã tồn tại */}
-        {customer && (
-          <div style={{ marginTop: 10 }}>
-            ✅ <strong>{customer.name}</strong> đã tồn tại.
-          </div>
-        )}
+      {showCreateCustomer && (
+        <form onSubmit={handleCreateCustomer} className="customer-form">
+          <h3>Tạo Khách Hàng Mới</h3>
 
-        {/* Form tạo khách hàng mới */}
-        {showCreateCustomer && (
-          <div style={{ border: "1px solid gray", padding: 10, marginTop: 10 }}>
-            <h3>Khách chưa tồn tại – Tạo mới:</h3>
-            <label>
-              Tên:
-              <input
-                value={createCustomerForm.name}
-                onChange={(e) =>
-                  setCreateCustomerForm((p) => ({ ...p, name: e.target.value }))
-                }
-                required
-              />
-            </label>
-            <label>
-              Số điện thoại:
-              <input
-                value={createCustomerForm.phone}
-                onChange={(e) =>
-                  setCreateCustomerForm((p) => ({
-                    ...p,
-                    phone: Number(e.target.value),
-                  }))
-                }
-                required
-              />
-            </label>
-            <label>
-              Địa chỉ:
-              <input
-                value={createCustomerForm.address}
-                onChange={(e) =>
-                  setCreateCustomerForm((p) => ({
-                    ...p,
-                    address: e.target.value,
-                  }))
-                }
-              />
-            </label>
-            <label>
-              Mô tả:
-              <input
-                value={createCustomerForm.description}
-                onChange={(e) =>
-                  setCreateCustomerForm((p) => ({
-                    ...p,
-                    description: e.target.value,
-                  }))
-                }
-              />
-            </label>
-            <button type="button" onClick={handleCreateCustomer}>
-              Tạo Khách Hàng
-            </button>
-          </div>
-        )}
+          <label>
+            Tên:
+            <input
+              type="text"
+              name="name"
+              value={newCustomer.name}
+              onChange={(e) =>
+                setNewCustomer((prev) => ({ ...prev, name: e.target.value }))
+              }
+              required
+            />
+          </label>
 
-        {/* Form tạo đơn hàng */}
-        {showOrderForm && (
-          <div style={{ marginTop: 20 }}>
-            <h3>📦 Tạo đơn hàng cho: {customer?.name}</h3>
-            {/* Bạn có thể render form theo interface ICreateOrder ở đây */}
-            {/* Ví dụ: <CreateOrderForm customer={customer} /> */}
-          </div>
-        )}
-      </div>
+          <label>
+            Số điện thoại:
+            <input
+              type="number"
+              name="phone"
+              value={newCustomer.phone}
+              onChange={(e) =>
+                setNewCustomer((prev) => ({
+                  ...prev,
+                  phone: Number(e.target.value),
+                }))
+              }
+              required
+            />
+          </label>
+
+          <label>
+            Địa chỉ:
+            <input
+              type="text"
+              name="address"
+              value={newCustomer.address}
+              onChange={(e) =>
+                setNewCustomer((prev) => ({ ...prev, address: e.target.value }))
+              }
+              required
+            />
+          </label>
+
+          <label>
+            Mô tả:
+            <textarea
+              name="description"
+              value={newCustomer.description}
+              onChange={(e) =>
+                setNewCustomer((prev) => ({
+                  ...prev,
+                  description: e.target.value,
+                }))
+              }
+            />
+          </label>
+
+          <button type="submit">Tạo Khách Hàng</button>
+        </form>
+      )}
+
+      {showOrderForm && customer && (
+        <form onSubmit={handleSubmitOrder} className="order-form">
+          <h3>Thông tin đơn hàng</h3>
+
+          <label>
+            Tên khách:
+            <input type="text" value={customer.name} readOnly />
+          </label>
+
+          <label>
+            Số điện thoại:
+            <input type="text" value={customer.phone} readOnly />
+          </label>
+
+          <label>
+            Mô tả đơn hàng:
+            <textarea
+              value={orderDescription}
+              onChange={(e) => setOrderDescription(e.target.value)}
+            />
+          </label>
+
+          <h4>Danh sách sản phẩm</h4>
+          {orderDetails.map((detail, idx) => (
+            <div key={idx}>
+              <label>
+                Tên SP:
+                <input
+                  type="text"
+                  value={detail.ProductName}
+                  onChange={(e) =>
+                    handleChangeDetail(idx, "ProductName", e.target.value)
+                  }
+                  required
+                />
+              </label>
+              <label>
+                Giá nhập:
+                <input
+                  type="number"
+                  value={detail.ImportPrice}
+                  onChange={(e) =>
+                    handleChangeDetail(
+                      idx,
+                      "ImportPrice",
+                      Number(e.target.value)
+                    )
+                  }
+                  required
+                />
+              </label>
+              <label>
+                Giá bán:
+                <input
+                  type="number"
+                  value={detail.SellingPrice}
+                  onChange={(e) =>
+                    handleChangeDetail(
+                      idx,
+                      "SellingPrice",
+                      Number(e.target.value)
+                    )
+                  }
+                  required
+                />
+              </label>
+              <label>
+                SL:
+                <input
+                  type="number"
+                  value={detail.Quantity}
+                  onChange={(e) =>
+                    handleChangeDetail(idx, "Quantity", Number(e.target.value))
+                  }
+                  required
+                />
+              </label>
+            </div>
+          ))}
+
+          <button type="button" onClick={handleAddDetail}>
+            + Thêm sản phẩm
+          </button>
+
+          <button type="submit">Tạo Đơn Hàng</button>
+        </form>
+      )}
     </CorePage>
   );
 }
