@@ -1,18 +1,47 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-  
-  html, body {
-    height: 100%;
+
+:root { 
+    --font-level-1: ;
+    --font-level-2: 20px;
+    --font-level-3: 25px;
+    --font-level-4: ;
+}
+
+form {
     width: 100%;
-  }
-  
+    max-width: 400px;
+    padding: 20px; 
+}
 
+form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
 
+form label {
+    display: block;
+    font-size: var(--font-level-2);
+    margin-bottom: 30px;
+}
 
+form input,
+form textarea { 
+    width: 100%;
+    padding: 8px 10px;
+    margin-top: 5px;
+    font-size: var(--font-level-2);
+}
 
+form textarea {
+    resize: vertical;
+    min-height: var(--font-level-2);
+}
+
+form button {
+    width: 100%;
+    padding: 10px;
+    font-size: var(--font-level-3);
+    cursor: pointer;
+}
 /* customer */
 
 

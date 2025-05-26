@@ -2,6 +2,7 @@ import React from "react";
 import { useRoute } from "../context/route";
 import { MENU, type IMenuItem } from "../metadata/menu";
 import ThemeSelection from "../theme/ThemeSelection";
+import Logo from "../components/logo/logo";
 
 type CorePageProps = {
   children: React.ReactNode;
@@ -14,6 +15,7 @@ const CorePage: React.FC<CorePageProps> = ({ children }) => {
     <div id="main-page">
       <div id="main-page-left">
         <div className="main-page-left-menu-wrap">
+          <Logo />
           {MENU.map((menu: IMenuItem, index: number) => (
             <button
               id="main-page-left-menu-item"

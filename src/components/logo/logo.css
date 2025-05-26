@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Playpen+Sans&display=swap');
+
+
+#logo {
+    filter: drop-shadow(10px 5px 2px rgb(0 0 0 / 0.4));
+    position: relative;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    left: -25%;
+   
+}
+
+
+.LogoWrap {
+    width: 330x;
+    height: 400px;
+    left:30px;
+    position: relative;
+}
+
+.LogoWrap-Line1 {
+    position: absolute;
+    left: 18%;
+    top: 25%;
+    font-size: 800%;
+    font-family: 'Playpen Sans', cursive;
+    color:red;
+}
+
+.LogoWrap-line2 {
+    position: absolute;
+    left: 18%;
+    top: 69%;
+    font-size: 950%;
+    color:black;
+    background-color: black;
+    width: 110px;
+    height: 10px;
+    border-radius: 40px;
+}
+
+.LogoWrap-line3 {
+    position: absolute;
+    left: 53%;
+    top: 63%;
+    font-size: 220%;
+    font-family: 'Playpen Sans', cursive;
+    color:black;
+}

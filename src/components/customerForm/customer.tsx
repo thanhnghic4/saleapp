@@ -1,9 +1,9 @@
 import { useState } from "react";
 import type { ICustomer } from "../../services/interface";
-import "./customer.css";
 import { Api } from "../../services";
 import { useLoading } from "../loading/loading";
 import { useToast } from "../toast/toast";
+import CustomForm from "../ui/form";
 
 const CustomerForm: React.FC = () => {
   const [customer, setCustomer] = useState<ICustomer>({
@@ -42,7 +42,7 @@ const CustomerForm: React.FC = () => {
     showToast("hello");
   };
   return (
-    <form onSubmit={handleSubmit} className="customer-form">
+    <CustomForm onSubmit={handleSubmit}>
       <h2>Create Customer</h2>
       <button type="button" onClick={testF}>
         TEST
@@ -87,7 +87,7 @@ const CustomerForm: React.FC = () => {
       </label>
 
       <button type="submit">Submit</button>
-    </form>
+    </CustomForm>
   );
 };
 

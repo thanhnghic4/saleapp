@@ -1,0 +1,20 @@
+
+
+
+.form-theme-default {
+    font-family: Arial, sans-serif;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.form-theme-default input,
+.form-theme-default textarea { 
+    border: 1px solid ;
+    border-radius: 4px;
+}
+
+
+.form-theme-default button {
+    border: none;
+    border-radius: 5px;
+}

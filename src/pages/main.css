@@ -26,6 +26,7 @@
   .main-page-left-menu-wrap {
     display: flex;
     flex-direction: column;
+    margin-top: -70%;
     gap: 20px;
     padding: 20px;
     align-items: center;
@@ -34,7 +35,7 @@
   
   .main-page-left-menu-wrap button {
     padding: 10px 20px;
-    font-size: 20px;
+    font-size: var(--font-level-3);
     cursor: pointer;
     width: 300px;
   }
