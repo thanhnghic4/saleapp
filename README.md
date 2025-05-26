@@ -1,7 +1,7 @@
 1. Tạo đơn hàng
 
 Thông tin khách hàng
-Tên: Khách lạ Số diện thoại: 00000
+Tên: Khách lạ Số diện thoại: 000000
 
 Tra cứu lịch sử mua hàng:
 -> khách mới [check] tự động tạo khách hàng mới
