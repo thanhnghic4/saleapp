@@ -1,0 +1,46 @@
+
+.loading-common {
+  transition: opacity 0.3s ease;
+  display: flex;
+  height: 100%;
+  justify-content: center; /* canh giữa ngang */
+  align-items: center;     /* canh giữa dọc */
+  position: fixed;
+  height: 100%;
+  width: 100%;
+}
+
+.loading-enable {
+  opacity: 0.5;
+  pointer-events: none; /* Ngăn người dùng tương tác */
+
+}
+
+.loading-disable {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.loading-enable .loader {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #FFF;
+  border-bottom-color: #FF3D00;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: loaderRotation 1s linear infinite;
+  }
+
+  @keyframes loaderRotation {
+  0% {
+      transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(360deg);
+  }
+}
+
+.loading-disable .loader { 
+  display: none;
+} 

@@ -2,6 +2,7 @@ import { useState } from "react";
 import type { ICustomer } from "../../services/interface";
 import "./customer.css";
 import { Api } from "../../services";
+import { useLoading } from "../loading/loading";
 
 const CustomerForm: React.FC = () => {
   const [customer, setCustomer] = useState<ICustomer>({
@@ -15,6 +16,7 @@ const CustomerForm: React.FC = () => {
     description: "",
   });
 
+  const { setLoading } = useLoading();
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -29,7 +31,9 @@ const CustomerForm: React.FC = () => {
     e.preventDefault();
     console.log("Customer created:", customer);
     // Add logic to save customer
+    setLoading(true);
     const result = await Api.createCustomer(customer);
+    setLoading(false);
     console.log(result);
   };
 
