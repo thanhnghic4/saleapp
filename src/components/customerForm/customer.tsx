@@ -3,6 +3,7 @@ import type { ICustomer } from "../../services/interface";
 import "./customer.css";
 import { Api } from "../../services";
 import { useLoading } from "../loading/loading";
+import { useToast } from "../toast/toast";
 
 const CustomerForm: React.FC = () => {
   const [customer, setCustomer] = useState<ICustomer>({
@@ -36,10 +37,16 @@ const CustomerForm: React.FC = () => {
     setLoading(false);
     console.log(result);
   };
-
+  const { showToast } = useToast();
+  const testF = () => {
+    showToast("hello");
+  };
   return (
     <form onSubmit={handleSubmit} className="customer-form">
       <h2>Create Customer</h2>
+      <button type="button" onClick={testF}>
+        TEST
+      </button>
       <label>
         Name:
         <input

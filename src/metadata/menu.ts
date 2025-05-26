@@ -7,8 +7,12 @@ export interface IMenuItem {
 
 export const MENU: IMenuItem[] = [
   {
-    name: "Tạo Đơn hàng",
+    name: "Home",
     path: "main",
+  },
+  {
+    name: "Tạo Đơn hàng",
+    path: "order",
   },
   {
     name: "Quản lý khách hàng",
