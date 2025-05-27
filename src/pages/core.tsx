@@ -15,7 +15,7 @@ const CorePage: React.FC<CorePageProps> = ({ children }) => {
     <div id="main-page">
       <div id="main-page-left">
         <div className="main-page-left-menu-wrap">
-          <Logo />
+          {/* <Logo /> */}
           {MENU.map((menu: IMenuItem, index: number) => (
             <button
               id="main-page-left-menu-item"

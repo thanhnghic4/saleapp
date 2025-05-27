@@ -5,9 +5,12 @@ import MainPage from "./pages/main";
 import OrderPage from "./pages/order";
 import ProductPage from "./pages/product";
 import ReportPage from "./pages/report";
+import { useAppInit } from "./services";
 
 export default function App() {
   const { route } = useRoute();
+  useAppInit();
+
   const renderPage = () => {
     switch (route) {
       case "main":

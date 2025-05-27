@@ -25,33 +25,3 @@ nhân viên làm đơn: ....
 4. Báo cáo
 
 // https://matifandy8.github.io/NeoBrutalismCSS/#started
-
-// function loadCustomers() {
-// console.log("step 1")
-// google.script.run.withSuccessHandler(function(names) {
-// customerList = names;
-// console.log("step 2")
-// console.log(names)
-// const input = document.getElementById("name");
-// input.addEventListener("input", function() {
-// const val = this.value.toLowerCase();
-// const suggestions = customerList.filter(c => c.toLowerCase().includes(val));
-// const datalist = document.getElementById("suggestions");
-// datalist.innerHTML = suggestions.map(name => `<option value="${name}">`).join('');
-// });
-// }).getCustomers();
-// }
-
-// function submitForm() {
-// const data = {
-// name: document.getElementById("name").value,
-// amount: document.getElementById("amount").value,
-// notes: document.getElementById("notes").value
-// };
-// google.script.run.withSuccessHandler(() => {
-// alert("Đã lưu hóa đơn!");
-// document.getElementById("form").reset();
-// }).submitInvoice(data);
-// }
-
-// window.onload = loadCustomers;

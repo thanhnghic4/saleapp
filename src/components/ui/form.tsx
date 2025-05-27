@@ -3,7 +3,7 @@ import React, {
   type ReactNode,
   type CSSProperties,
 } from "react";
-import "./form.css";
+import "./form-default.css";
 import { useTheme } from "../../theme";
 
 interface CustomFormProps {
