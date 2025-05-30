@@ -6,6 +6,7 @@ import React, {
   type ReactNode,
 } from "react";
 import type { RouterType } from "../metadata/menu";
+import { useAuth } from "../components/login/login";
 
 interface RouteContextType {
   route: RouterType;
@@ -25,11 +26,18 @@ interface RouteProviderProps {
 
 export const RouteProvider: React.FC<RouteProviderProps> = ({ children }) => {
   const [route, setCurrentRoute] = useState<RouterType>(defaultRoute);
-
+  const { user } = useAuth();
   // Lấy route từ URL khi load trang
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const pageParam = params.get("page");
+
+    if (!user) {
+      setCurrentRoute("login");
+      const newUrl = `?page=login`;
+      window.history.pushState(null, "", newUrl);
+      return;
+    }
 
     if (
       pageParam &&
@@ -37,9 +45,13 @@ export const RouteProvider: React.FC<RouteProviderProps> = ({ children }) => {
     ) {
       setCurrentRoute(pageParam as RouterType);
     }
-  }, []);
+  }, [user]);
 
-  const setRoute = (newRoute: RouterType) => {
+  const setRoute = (r: RouterType) => {
+    let newRoute = r;
+    if (!user) {
+      newRoute = "login";
+    }
     console.log("a1");
     console.log(`setroute ${newRoute}, currentRoute = ${route}`);
     if (newRoute !== route) {

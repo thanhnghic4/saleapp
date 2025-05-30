@@ -5,15 +5,18 @@ import App from "./App.tsx";
 import { RouteProvider } from "./context/route.tsx";
 import { LoadingProvider } from "./components/loading/loading.tsx";
 import { ToastProvider } from "./components/toast/toast.tsx";
+import { AuthProvider } from "./components/login/login.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <RouteProvider>
-      <ToastProvider>
-        <LoadingProvider>
-          <App />
-        </LoadingProvider>
-      </ToastProvider>
-    </RouteProvider>
+    <AuthProvider>
+      <RouteProvider>
+        <ToastProvider>
+          <LoadingProvider>
+            <App />
+          </LoadingProvider>
+        </ToastProvider>
+      </RouteProvider>
+    </AuthProvider>
   </StrictMode>
 );

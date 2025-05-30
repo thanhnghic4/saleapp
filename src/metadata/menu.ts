@@ -1,4 +1,10 @@
-export type RouterType = "main" | "order" | "product" | "customer" | "report";
+export type RouterType =
+  | "main"
+  | "order"
+  | "product"
+  | "customer"
+  | "report"
+  | "login";
 
 export interface IMenuItem {
   name: string;

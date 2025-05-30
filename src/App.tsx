@@ -6,6 +6,7 @@ import OrderPage from "./pages/order";
 import ProductPage from "./pages/product";
 import ReportPage from "./pages/report";
 import { useAppInit } from "./services";
+import LoginPage from "./pages/login";
 
 export default function App() {
   const { route } = useRoute();
@@ -23,6 +24,8 @@ export default function App() {
         return <CustomerPage />;
       case "report":
         return <ReportPage />;
+      case "login":
+        return <LoginPage />;
       default:
         return <MainPage />; // fallback
     }

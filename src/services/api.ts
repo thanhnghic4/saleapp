@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import type { ICreateCustomer } from "./interface";
+import type { ICreateCustomer, IStaff } from "./interface";
 
 const GOOGLE_SCRIPT_TIMEOUT = 10000;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -87,4 +87,34 @@ export const getOrderByIds = async (
 
 export const deleteOrder = async (id: string): Promise<boolean> => {
   return executeGoogleScript<string, boolean>("deleteOrder", id);
+};
+
+export const login = async (
+  data: ILoginData
+): Promise<{
+  errorType: number;
+  detail: string;
+  data: IStaff;
+}> => {
+  return executeGoogleScript<string, boolean>("login", data);
+};
+
+export const changePassword = async (
+  data: IChangePassData
+): Promise<{
+  success: boolean;
+  detail: string;
+  errorType: number;
+}> => {
+  return executeGoogleScript<string, boolean>("changePassword", data);
+};
+
+export const updateStaffInfo = async (
+  data: IChangeStaffData
+): Promise<{
+  success: boolean;
+  detail: string;
+  errorType: number;
+}> => {
+  return executeGoogleScript<string, boolean>("updateStaffInfo", data);
 };

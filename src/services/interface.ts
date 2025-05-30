@@ -76,3 +76,27 @@ export interface ICreateOrder {
     Detail?: string;
   }[];
 }
+
+export interface IStaff {
+  name: string;
+  position: string;
+  avatar: string;
+  password: string;
+}
+
+export interface ILoginData {
+  name: string;
+  password: string;
+}
+
+export interface IChangePassData {
+  name: string;
+  oldPassword: string;
+  newPassword: string;
+}
+
+export interface IChangeStaffData {
+  name: string;
+  newPosition: string;
+  newAvatar: string;
+}
