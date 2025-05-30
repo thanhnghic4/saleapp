@@ -5,7 +5,7 @@ import App from "./App.tsx";
 import { RouteProvider } from "./context/route.tsx";
 import { LoadingProvider } from "./components/loading/loading.tsx";
 import { ToastProvider } from "./components/toast/toast.tsx";
-import { AuthProvider } from "./components/login/login.tsx";
+import { AuthProvider } from "./components/auth/auth.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

@@ -6,7 +6,7 @@ import React, {
   type ReactNode,
 } from "react";
 import type { RouterType } from "../metadata/menu";
-import { useAuth } from "../components/login/login";
+import { useAuth } from "../components/auth/auth";
 
 interface RouteContextType {
   route: RouterType;
@@ -33,9 +33,7 @@ export const RouteProvider: React.FC<RouteProviderProps> = ({ children }) => {
     const pageParam = params.get("page");
 
     if (!user) {
-      setCurrentRoute("login");
-      const newUrl = `?page=login`;
-      window.history.pushState(null, "", newUrl);
+      redirect("login");
       return;
     }
 
@@ -44,20 +42,31 @@ export const RouteProvider: React.FC<RouteProviderProps> = ({ children }) => {
       ["main", "order", "product", "customer", "report"].includes(pageParam)
     ) {
       setCurrentRoute(pageParam as RouterType);
+    } else {
+      redirect("main");
     }
   }, [user]);
+
+  const redirect = (page: RouterType) => {
+    setCurrentRoute(page);
+    const newUrl = `?page=${page}`;
+    window.history.pushState(null, "", newUrl);
+  };
 
   const setRoute = (r: RouterType) => {
     let newRoute = r;
     if (!user) {
       newRoute = "login";
     }
+
+    if (user && newRoute === "login") {
+      redirect("main");
+      return;
+    }
     console.log("a1");
     console.log(`setroute ${newRoute}, currentRoute = ${route}`);
     if (newRoute !== route) {
-      setCurrentRoute(newRoute);
-      const newUrl = `?page=${newRoute}`;
-      window.history.pushState(null, "", newUrl);
+      redirect(newRoute);
     }
   };
 
